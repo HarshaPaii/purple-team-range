@@ -1,0 +1,13 @@
+# PURPLE-RANGE custom Suricata rule
+# Detects a TCP SYN port scan from the attacker host against the lab target.
+# Location on sensor: /etc/suricata/rules/local.rules
+#
+# sid:9000001 — PURPLE-RANGE TCP SYN Port Scan Detected
+# Fires when >=1 unestablished SYN packet (no ACK) is seen from Kali -> Metasploitable2.
+# flow:stateless is used instead of a threshold block so the rule fires on every
+# matching packet; de-duplication/aggregation is handled downstream by the
+# corresponding Wazuh correlation rule (100001) rather than inside Suricata itself.
+#
+# MITRE ATT&CK: T1046 (Network Service Discovery)
+
+alert tcp 10.10.10.10 any -> 10.10.10.20 any (msg:"PURPLE-RANGE TCP SYN Port Scan Detected"; flags:S; flow:stateless; sid:9000001; rev:4; classtype:attempted-recon;)

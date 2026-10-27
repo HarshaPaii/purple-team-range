@@ -1,0 +1,29 @@
+<!--
+  PURPLE-RANGE custom Wazuh rule
+  Location on manager: /var/ossec/etc/rules/local_rules.xml
+
+  Correlates on the Suricata base rule (86601, Wazuh's built-in Suricata JSON
+  decoder/rule) plus the custom Suricata signature_id (9000001) to raise a
+  dedicated, higher-severity alert for the lab's custom port-scan detection,
+  tagged with its MITRE ATT&CK technique.
+
+  Debugging note (see REPORT.md for full root-cause writeup): the field name
+  that actually matches inside the Wazuh rule-matching engine is
+  "alert.signature_id" with NO "data." prefix — the data. prefix is added
+  only by the Wazuh indexer for storage/search, not present in the raw
+  decoded fields a <rule> block matches against. This was confirmed via
+  `wazuh-logtest` by feeding the raw Suricata eve.json line directly into the
+  decoder/rule pipeline and inspecting the Phase 2 decoded-field dump.
+
+  MITRE ATT&CK: T1046 (Network Service Discovery / Discovery tactic)
+-->
+<group name="local,suricata,">
+  <rule id="100001" level="10">
+    <if_sid>86601</if_sid>
+    <field name="alert.signature_id" type="pcre2">^9000001$</field>
+    <description>PURPLE-RANGE: Custom Suricata SYN Port Scan rule triggered (sid 9000001)</description>
+    <mitre>
+      <id>T1046</id>
+    </mitre>
+  </rule>
+</group>
