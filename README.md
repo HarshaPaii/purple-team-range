@@ -1,6 +1,6 @@
 # Purple Team Range
 
-An end-to-end offensive + defensive security lab: compromising an intentionally vulnerable target across the full attack chain, then building and debugging the custom detection logic that catches the attack live in a SIEM — all on a Rs 0 / open-source toolchain running on an 8GB-RAM host.
+An end-to-end offensive + defensive security lab: compromising an intentionally vulnerable target across the full attack chain, then building and debugging the custom detection logic that catches the attack live in a SIEM
 
 **📄 [Full technical report with CVSS scoring and MITRE ATT&CK mapping →](REPORT.md)**
 
